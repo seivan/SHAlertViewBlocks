@@ -1,38 +1,24 @@
-SHActionSheetBlocks
+SHAlertViewBlocks
 ==========
-
-Screenshots
-------------
-[![Green default](/Screenshots/Green/default_th.jpg "Green default")](https://raw.github.com/seivan/SHActionSheetBlocks/develop/Screenshots/Green/default.png)
-[![Green selected](/Screenshots/Green/selected_th.jpg "Green selected")](https://raw.github.com/seivan/SHActionSheetBlocks/develop/Screenshots/Green/selected.png)
-[![Green cancel-selected](/Screenshots/Green/cancel-selected_th.jpg "Green cancel-selected")](https://raw.github.com/seivan/SHActionSheetBlocks/develop/Screenshots/Green/cancel-selected.png)
-
-[![Blue default](/Screenshots/Blue/default_th.jpg "Blue default")](https://raw.github.com/seivan/SHActionSheetBlocks/develop/Screenshots/Blue/default.png)
-[![Blue selected](/Screenshots/Blue/selected_th.jpg "Blue selected")](https://raw.github.com/seivan/SHActionSheetBlocks/develop/Screenshots/Blue/selected.png)
-[![Blue cancel-selected](/Screenshots/Blue/cancel-selected_th.jpg "Blue cancel-selected")](https://raw.github.com/seivan/SHActionSheetBlocks/develop/Screenshots/Blue/cancel-selected.png)
-
-[![Purple default](/Screenshots/Purple/default_th.jpg "Purple default")](https://raw.github.com/seivan/SHActionSheetBlocks/develop/Screenshots/Purple/default.png)
-[![Purple selected](/Screenshots/Purple/selected_th.jpg "Purple selected")](https://raw.github.com/seivan/SHActionSheetBlocks/develop/Screenshots/Purple/selected.png)
-[![Purple cancel-selected](/Screenshots/Purple/cancel-selected_th.jpg "Purple cancel-selected")](https://raw.github.com/seivan/SHActionSheetBlocks/develop/Screenshots/Purple/cancel-selected.png)
 
 Overview
 --------
-The blocks are automatically removed once the sheet is gone, so it isn't necessary to clean up - Swizzle Free(™)
+The blocks are automatically removed once the alert is gone, so it isn't necessary to clean up - Swizzle Free(™)
 
 ### API
 
-#### [Init](https://github.com/seivan/SHActionSheetBlocks#init-1)
+#### [Init](https://github.com/seivan/SHAlertViewBlocks#init-1)
 
-#### [Add](https://github.com/seivan/SHActionSheetBlocks#add-1)
+#### [Add](https://github.com/seivan/SHAlertViewBlocks#add-1)
 
-#### [Properties](https://github.com/seivan/SHActionSheetBlocks#properties-1)
+#### [Properties](https://github.com/seivan/SHAlertViewBlocks#properties-1)
 
 
 Installation
 ------------
 
 ```ruby
-pod 'SHActionSheetBlocks'
+pod 'SHAlertViewBlocks'
 ```
 
 ***
@@ -43,11 +29,11 @@ Setup
 Put this either in specific files or your project prefix file
 
 ```objective-c
-#import 'UIActionSheet+SHActionSheetBlocks.h'
+#import "UIAlertView+SHAlertViewBlocks.h"
 ```
 or
 ```objective-c
-#import 'SHActionSheetBlocks.h'
+#import "SHAlertViewBlocks.h"
 ```
 
 API
@@ -58,7 +44,14 @@ API
 ```objective-c
 #pragma mark -
 #pragma mark Init
-+(instancetype)SH_actionSheetWithTitle:(NSString *)theTitle;
++(instancetype)SH_alertViewWithTitle:(NSString *)theTitle withMessage:(NSString *)theMessage;
+
++(instancetype)SH_alertViewWithTitle:(NSString *)theTitle
+                          andMessage:(NSString *)theMessage
+                        buttonTitles:(NSArray *)theButtonTitles
+                         cancelTitle:(NSString *)theCancelTitle
+                           withBlock:(SHAlertViewBlock)theBlock;
+
 
 ```
 
@@ -66,15 +59,15 @@ API
 
 ```objective-c
 #pragma mark -
-#pragma mark Add
+#pragma mark Adding
 -(NSUInteger)SH_addButtonWithTitle:(NSString *)theTitle
-                      withBlock:(SHActionSheetBlock)theBlock;
+                         withBlock:(SHAlertViewBlock)theBlock;
 
--(NSUInteger)SH_setDestructiveButtonWithTitle:(NSString *)theTitle
-                                 withBlock:(SHActionSheetBlock)theBlock;
 
--(NSUInteger)SH_setCancelButtonWithTitle:(NSString *)theTitle
-                            withBlock:(SHActionSheetBlock)theBlock;
+///Will add a new cancel button and make previous cancel buttons to normal
+-(NSUInteger)SH_addButtonCancelWithTitle:(NSString *)theTitle
+                               withBlock:(SHAlertViewBlock)theBlock;
+
 
 ```
 
@@ -86,22 +79,31 @@ API
 
 #pragma mark -
 #pragma mark Setters
+-(void)SH_setButtonBlockForIndex:(NSUInteger)theButtonIndex
+                       withBlock:(SHAlertViewBlock)theBlock;
 
--(void)SH_setWillShowBlock:(SHActionSheetWillShowBlock)theBlock;
--(void)SH_setDidShowBlock:(SHActionSheetDidShowBlock)theBlock;
+-(void)SH_setButtonCancelBlock:(SHAlertViewBlock)theBlock;
 
--(void)SH_setWillDismissBlock:(SHActionSheetWillDismissBlock)theBlock;
--(void)SH_setDidDismissBlock:(SHActionSheetDidDismissBlock)theBlock;
+-(void)SH_setWillShowBlock:(SHAlertViewShowBlock)theBlock;
+-(void)SH_setDidShowBlock:(SHAlertViewShowBlock)theBlock;
+
+-(void)SH_setWillDismissBlock:(SHAlertViewDismissBlock)theBlock;
+-(void)SH_setDidDismissBlock:(SHAlertViewDismissBlock)theBlock;
 
 #pragma mark -
 #pragma mark Getters
+-(SHAlertViewBlock)SH_blockForButtonIndex:(NSUInteger)theButtonIndex;
 
 
-@property(nonatomic,readonly) SHActionSheetWillShowBlock    SH_blockWillShow;
-@property(nonatomic,readonly) SHActionSheetDidShowBlock     SH_blockDidShow;
+@property(nonatomic,readonly) SHAlertViewBlock SH_blockForCancelButton;
 
-@property(nonatomic,readonly) SHActionSheetWillDismissBlock SH_blockWillDismiss;
-@property(nonatomic,readonly) SHActionSheetDidDismissBlock  SH_blockDidDismiss;
+
+@property(nonatomic,readonly) SHAlertViewShowBlock    SH_blockWillShow;
+@property(nonatomic,readonly) SHAlertViewShowBlock    SH_blockDidShow;
+
+@property(nonatomic,readonly) SHAlertViewDismissBlock SH_blockWillDismiss;
+@property(nonatomic,readonly) SHAlertViewDismissBlock SH_blockDidDismiss;
+
 
 ```
 
@@ -109,14 +111,14 @@ API
 Contact
 -------
 
-If you end up using SHActionSheetBlocks in a project, I'd love to hear about it.
+If you end up using SHAlertViewBlocks in a project, I'd love to hear about it.
 
 email: [seivan.heidari@icloud.com](mailto:seivan.heidari@icloud.com)  
 twitter: [@seivanheidari](https://twitter.com/seivanheidari)
 
 ## License
 
-SHActionSheetBlocks is © 2013 [Seivan](http://www.github.com/seivan) and may be freely
+SHAlertViewBlocks is © 2013 [Seivan](http://www.github.com/seivan) and may be freely
 distributed under the [MIT license](http://opensource.org/licenses/MIT).
-See the [`LICENSE.md`](https://github.com/seivan/SHActionSheetBlocks/blob/master/LICENSE.md) file.
+See the [`LICENSE.md`](https://github.com/seivan/SHAlertViewBlocks/blob/master/LICENSE.md) file.
 
