@@ -9,9 +9,6 @@
 /* Begin PBXBuildFile section */
 		2263577E17547F7800CBF961 /* SHSecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2263577D17547F7800CBF961 /* SHSecondViewController.m */; };
 		22A32ECA178892580006E64E /* default.css in Resources */ = {isa = PBXBuildFile; fileRef = 22A32EC9178892580006E64E /* default.css */; };
-		22A32ECC1788929D0006E64E /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 22A32ECB1788929D0006E64E /* QuartzCore.framework */; };
-		22A32ECE178892A10006E64E /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 22A32ECD178892A10006E64E /* CoreText.framework */; };
-		22A32ED01788954C0006E64E /* PXEngine.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 22A32ECF1788954C0006E64E /* PXEngine.framework */; };
 		22D3AEAC1742D9B8000AB469 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 22D3AEAB1742D9B8000AB469 /* UIKit.framework */; };
 		22D3AEAE1742D9B8000AB469 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 22D3AEAD1742D9B8000AB469 /* Foundation.framework */; };
 		22D3AEB01742D9B8000AB469 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 22D3AEAF1742D9B8000AB469 /* CoreGraphics.framework */; };
@@ -31,9 +28,6 @@
 		2263577C17547F7800CBF961 /* SHSecondViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHSecondViewController.h; sourceTree = "<group>"; };
 		2263577D17547F7800CBF961 /* SHSecondViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHSecondViewController.m; sourceTree = "<group>"; };
 		22A32EC9178892580006E64E /* default.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = default.css; sourceTree = "<group>"; };
-		22A32ECB1788929D0006E64E /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
-		22A32ECD178892A10006E64E /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
-		22A32ECF1788954C0006E64E /* PXEngine.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = PXEngine.framework; sourceTree = "<group>"; };
 		22D3AEA81742D9B8000AB469 /* Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		22D3AEAB1742D9B8000AB469 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		22D3AEAD1742D9B8000AB469 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -58,13 +52,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				22A32ECE178892A10006E64E /* CoreText.framework in Frameworks */,
-				22A32ECC1788929D0006E64E /* QuartzCore.framework in Frameworks */,
 				22D3AEAC1742D9B8000AB469 /* UIKit.framework in Frameworks */,
 				22D3AEAE1742D9B8000AB469 /* Foundation.framework in Frameworks */,
 				22D3AEB01742D9B8000AB469 /* CoreGraphics.framework in Frameworks */,
 				5B25AED73D9C4A729F20B25A /* libPods.a in Frameworks */,
-				22A32ED01788954C0006E64E /* PXEngine.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -92,9 +83,6 @@
 		22D3AEAA1742D9B8000AB469 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				22A32ECF1788954C0006E64E /* PXEngine.framework */,
-				22A32ECD178892A10006E64E /* CoreText.framework */,
-				22A32ECB1788929D0006E64E /* QuartzCore.framework */,
 				22D3AEAB1742D9B8000AB469 /* UIKit.framework */,
 				22D3AEAD1742D9B8000AB469 /* Foundation.framework */,
 				22D3AEAF1742D9B8000AB469 /* CoreGraphics.framework */,

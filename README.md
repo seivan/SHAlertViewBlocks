@@ -3,17 +3,17 @@ SHActionSheetBlocks
 
 Screenshots
 ------------
-[![Green default](/Screenshots/Green/default_th.jpg "Green default")](https://raw.github.com/seivan/SHActionSheetBlocks/master/Screenshots/Green/default.png)
-[![Green selected](/Screenshots/Green/selected_th.jpg "Green selected")](https://raw.github.com/seivan/SHActionSheetBlocks/master/Screenshots/Green/selected.png)
-[![Green cancel-selected](/Screenshots/Green/cancel-selected_th.jpg "Green cancel-selected")](https://raw.github.com/seivan/SHActionSheetBlocks/master/Screenshots/Green/cancel-selected.png)
+[![Green default](/Screenshots/Green/default_th.jpg "Green default")](https://raw.github.com/seivan/SHActionSheetBlocks/develop/Screenshots/Green/default.png)
+[![Green selected](/Screenshots/Green/selected_th.jpg "Green selected")](https://raw.github.com/seivan/SHActionSheetBlocks/develop/Screenshots/Green/selected.png)
+[![Green cancel-selected](/Screenshots/Green/cancel-selected_th.jpg "Green cancel-selected")](https://raw.github.com/seivan/SHActionSheetBlocks/develop/Screenshots/Green/cancel-selected.png)
 
-[![Blue default](/Screenshots/Blue/default_th.jpg "Blue default")](https://raw.github.com/seivan/SHActionSheetBlocks/master/Screenshots/Blue/default.png)
-[![Blue selected](/Screenshots/Blue/selected_th.jpg "Blue selected")](https://raw.github.com/seivan/SHActionSheetBlocks/master/Screenshots/Blue/selected.png)
-[![Blue cancel-selected](/Screenshots/Blue/cancel-selected_th.jpg "Blue cancel-selected")](https://raw.github.com/seivan/SHActionSheetBlocks/master/Screenshots/Blue/cancel-selected.png)
+[![Blue default](/Screenshots/Blue/default_th.jpg "Blue default")](https://raw.github.com/seivan/SHActionSheetBlocks/develop/Screenshots/Blue/default.png)
+[![Blue selected](/Screenshots/Blue/selected_th.jpg "Blue selected")](https://raw.github.com/seivan/SHActionSheetBlocks/develop/Screenshots/Blue/selected.png)
+[![Blue cancel-selected](/Screenshots/Blue/cancel-selected_th.jpg "Blue cancel-selected")](https://raw.github.com/seivan/SHActionSheetBlocks/develop/Screenshots/Blue/cancel-selected.png)
 
-[![Purple default](/Screenshots/Purple/default_th.jpg "Purple default")](https://raw.github.com/seivan/SHActionSheetBlocks/master/Screenshots/Purple/default.png)
-[![Purple selected](/Screenshots/Purple/selected_th.jpg "Purple selected")](https://raw.github.com/seivan/SHActionSheetBlocks/master/Screenshots/Purple/selected.png)
-[![Purple cancel-selected](/Screenshots/Purple/cancel-selected_th.jpg "Purple cancel-selected")](https://raw.github.com/seivan/SHActionSheetBlocks/master/Screenshots/Purple/cancel-selected.png)
+[![Purple default](/Screenshots/Purple/default_th.jpg "Purple default")](https://raw.github.com/seivan/SHActionSheetBlocks/develop/Screenshots/Purple/default.png)
+[![Purple selected](/Screenshots/Purple/selected_th.jpg "Purple selected")](https://raw.github.com/seivan/SHActionSheetBlocks/develop/Screenshots/Purple/selected.png)
+[![Purple cancel-selected](/Screenshots/Purple/cancel-selected_th.jpg "Purple cancel-selected")](https://raw.github.com/seivan/SHActionSheetBlocks/develop/Screenshots/Purple/cancel-selected.png)
 
 Overview
 --------
@@ -43,11 +43,11 @@ Setup
 Put this either in specific files or your project prefix file
 
 ```objective-c
-#import "UIActionSheet+SHActionSheetBlocks.h"
+#import 'UIActionSheet+SHActionSheetBlocks.h'
 ```
 or
 ```objective-c
-#import "SHActionSheetBlocks.h"
+#import 'SHActionSheetBlocks.h'
 ```
 
 API
@@ -60,29 +60,21 @@ API
 #pragma mark Init
 +(instancetype)SH_actionSheetWithTitle:(NSString *)theTitle;
 
-+(instancetype)SH_actionSheetWithTitle:(NSString *)theTitle
-                          buttonTitles:(id<NSFastEnumeration>)theButtonTitles
-                           cancelTitle:(NSString *)theCancelTitle
-                      destructiveTitle:(NSString *)theDestructiveTitle
-                             withBlock:(SHActionSheetBlock)theBlock;
-
 ```
 
 ### Add
 
 ```objective-c
 #pragma mark -
-#pragma mark Adding
+#pragma mark Add
 -(NSUInteger)SH_addButtonWithTitle:(NSString *)theTitle
                       withBlock:(SHActionSheetBlock)theBlock;
 
-///Will add a new destructive button and make previous Destructive buttons to normal
--(NSUInteger)SH_addButtonDestructiveWithTitle:(NSString *)theTitle
-                                    withBlock:(SHActionSheetBlock)theBlock;
+-(NSUInteger)SH_setDestructiveButtonWithTitle:(NSString *)theTitle
+                                 withBlock:(SHActionSheetBlock)theBlock;
 
-///Will add a new destructive button and make previous Destructive buttons to normal
--(NSUInteger)SH_addButtonCancelWithTitle:(NSString *)theTitle
-                               withBlock:(SHActionSheetBlock)theBlock;
+-(NSUInteger)SH_setCancelButtonWithTitle:(NSString *)theTitle
+                            withBlock:(SHActionSheetBlock)theBlock;
 
 ```
 
@@ -94,32 +86,22 @@ API
 
 #pragma mark -
 #pragma mark Setters
--(void)SH_setButtonBlockForIndex:(NSUInteger)theButtonIndex
-                       withBlock:(SHActionSheetBlock)theBlock;
 
+-(void)SH_setWillShowBlock:(SHActionSheetWillShowBlock)theBlock;
+-(void)SH_setDidShowBlock:(SHActionSheetDidShowBlock)theBlock;
 
--(void)SH_setButtonDestructiveBlock:(SHActionSheetBlock)theBlock;
--(void)SH_setButtonCancelBlock:(SHActionSheetBlock)theBlock;
-
--(void)SH_setWillShowBlock:(SHActionSheetShowBlock)theBlock;
--(void)SH_setDidShowBlock:(SHActionSheetShowBlock)theBlock;
-
--(void)SH_setWillDismissBlock:(SHActionSheetDismissBlock)theBlock;
--(void)SH_setDidDismissBlock:(SHActionSheetDismissBlock)theBlock;
+-(void)SH_setWillDismissBlock:(SHActionSheetWillDismissBlock)theBlock;
+-(void)SH_setDidDismissBlock:(SHActionSheetDidDismissBlock)theBlock;
 
 #pragma mark -
 #pragma mark Getters
--(SHActionSheetBlock)SH_blockForButtonIndex:(NSUInteger)theButtonIndex;
-
-@property(nonatomic,readonly) SHActionSheetBlock SH_blockForDestructiveButton;
-@property(nonatomic,readonly) SHActionSheetBlock SH_blockForCancelButton;
 
 
-@property(nonatomic,readonly) SHActionSheetShowBlock    SH_blockWillShow;
-@property(nonatomic,readonly) SHActionSheetShowBlock    SH_blockDidShow;
+@property(nonatomic,readonly) SHActionSheetWillShowBlock    SH_blockWillShow;
+@property(nonatomic,readonly) SHActionSheetDidShowBlock     SH_blockDidShow;
 
-@property(nonatomic,readonly) SHActionSheetDismissBlock SH_blockWillDismiss;
-@property(nonatomic,readonly) SHActionSheetDismissBlock SH_blockDidDismiss;
+@property(nonatomic,readonly) SHActionSheetWillDismissBlock SH_blockWillDismiss;
+@property(nonatomic,readonly) SHActionSheetDidDismissBlock  SH_blockDidDismiss;
 
 ```
 

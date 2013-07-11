@@ -1,4 +1,4 @@
 platform :ios, '6.0' 
-pod 'SHActionSheetBlocks', :path => '../'
+pod 'SHAlertViewBlocks', :path => '../'
 pod 'SHSegueBlocks'
 pod 'SHBarButtonItemBlocks'

@@ -9,7 +9,7 @@
 
 #import "SHSegueBlocks.h"
 #import "SHViewController.h"
-#import "SHActionSheetBlocks.h"
+#import "SHAlertViewBlocks.h"
 #import "SHBarButtonItemBlocks.h"
 
 
@@ -62,7 +62,7 @@
   NSUInteger cancelIndex      = 3;
   
   
-  [sheet SH_addButtonCancelWithTitle:@"Cancel" withBlock:^(NSUInteger theButtonIndex) {
+  [sheet SH_setCancelButtonWithTitle:@"Cancel" withBlock:^(NSUInteger theButtonIndex) {
     NSLog(@"Cancel");
     SHBlockAssert(theButtonIndex == cancelIndex ,
                   @"Cancel button index is 3");
