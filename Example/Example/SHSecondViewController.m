@@ -1,93 +1,73 @@
+////
+////  SHSecondViewController.m
+////  Example
+////
+////  Created by Seivan Heidari on 5/28/13.
+////  Copyright (c) 2013 Seivan Heidari. All rights reserved.
+////
 //
-//  SHSecondViewController.m
-//  Example
+//#import "SHSecondViewController.h"
+//#import "SHAlertViewBlocks.h"
 //
-//  Created by Seivan Heidari on 5/28/13.
-//  Copyright (c) 2013 Seivan Heidari. All rights reserved.
 //
-
-#import "SHSecondViewController.h"
-#import "SHActionSheetBlocks.h"
-#import <PXEngine/PXEngine.h>
-
-@interface SHSecondViewController ()
--(void)popUpActionSheet;
--(void)popUpActionSheetAgain;
-@end
-
-@implementation SHSecondViewController
-
--(void)viewDidAppear:(BOOL)animated; {
-  self.view.backgroundColor = [UIColor blackColor];
-  [self popUpActionSheet];
-}
-
--(void)popUpActionSheetAgain; {
-  UIActionSheet * sheet = [UIActionSheet SH_actionSheetWithTitle:@"New sheet" buttonTitles:@[@"First", @"Second"] cancelTitle:@"Cancel" destructiveTitle:nil withBlock:^(NSUInteger theButtonIndex) {
-    SHBlockAssert(theButtonIndex >= 0, @"Button Index is more or equal to 0");
-  }];
-  
-  SHBlockAssert(sheet.numberOfButtons == 3 , @"Musth have 4 buttons");
-  SHBlockAssert(sheet.SH_blockForCancelButton != nil , @"Cancel has a block");
-  SHBlockAssert(sheet.SH_blockForDestructiveButton == nil , @"Destructive  does not have a block");
-  [sheet showInView:self.view];
-}
-
--(void)popUpActionSheet; {
-  NSString * title = @"Sample";
-  
-  __weak typeof(self) weakSelf = self;
-  
-  UIActionSheet * sheet = [UIActionSheet SH_actionSheetWithTitle:title];
-  SHBlockAssert(sheet, @"Instance of a sheet");
-  SHBlockAssert([sheet.title isEqualToString:title], @"Title should be set");
-
-  SHActionSheetBlock block = ^(NSUInteger theButtonIndex) {
-    SHBlockAssert(theButtonIndex >= 0, @"Must have a buttonIndex");
-    [weakSelf popUpActionSheetAgain];
-  };
-  
-  [sheet addButtonWithTitle:@"Button 0"];
-  [sheet addButtonWithTitle:@"Button 1"];
-  [sheet addButtonWithTitle:@"Button 2"];
-  SHBlockAssert([sheet SH_blockForButtonIndex:0] == nil, @"Button Index 0 has no block");
-  SHBlockAssert([sheet SH_blockForButtonIndex:1] == nil, @"Button Index 1 has no block");
-  SHBlockAssert([sheet SH_blockForButtonIndex:2] == nil, @"Button Index 1 has no block");
-
-  [sheet SH_setButtonBlockForIndex:0 withBlock:block];
-  [sheet SH_setButtonBlockForIndex:1 withBlock:block];
-  [sheet SH_setButtonBlockForIndex:2 withBlock:block];
-  
-  [sheet SH_addButtonWithTitle:@"Block button" withBlock:block];
-  
-  SHBlockAssert([sheet SH_blockForButtonIndex:2] == block, @"Button Index 4 has a block");
-  
-  [sheet addButtonWithTitle:@"Cancel"];
-  [sheet addButtonWithTitle:@"Destructive"];
-  
-  sheet.cancelButtonIndex = 4;
-  sheet.destructiveButtonIndex = 5;
-  [sheet SH_setButtonCancelBlock:block];
-  [sheet SH_setButtonDestructiveBlock:block];
-  SHBlockAssert([sheet SH_blockForButtonIndex:4] == [sheet SH_blockForCancelButton],
-                @"Button Index 5 should be equal to SH_blockForCancel");
-  SHBlockAssert([sheet SH_blockForButtonIndex:5] == [sheet SH_blockForCancelButton],
-                @"Button Index 6 should be equal to SH_blockForDestructive");
-  
-  SHBlockAssert(block == [sheet SH_blockForCancelButton],
-                @"Button Index 5 should be equal to SH_blockForCancel");
-  SHBlockAssert(block == [sheet SH_blockForCancelButton],
-                @"Button Index 6 should be equal to SH_blockForDestructive");
-
-  [sheet addButtonWithTitle:@"Weird button"];
-  
-  
-  [sheet showInView:self.view];
-  
-}
-
--(IBAction)unwinder:(UIStoryboardSegue *)theSegue; {
-  
-}
-
-@end
+//@interface SHSecondViewController ()
+//-(void)popUpActionSheet;
+//@end
+//
+//@implementation SHSecondViewController
+//
+//-(void)viewDidAppear:(BOOL)animated; {
+//  self.view.backgroundColor = [UIColor blackColor];
+//  [self popUpActionSheet];
+//}
+//
+//
+//
+//-(void)popUpActionSheet; {
+//  NSString * title = @"Sample";
+//  
+//  UIAlertView * alert = [UIAlertView SH_alertViewWithTitle:title withMessage:nil];
+//  SHBlockAssert(alert, @"Instance of a sheet");
+//  SHBlockAssert([alert.title isEqualToString:title], @"Title should be set");
+//  
+//  
+//  for (NSUInteger i = 0; i != 3; i++) {
+//    NSString * title = [NSString stringWithFormat:@"Button %d", i];
+//    [sheet SH_addButtonWithTitle:title withBlock:^(NSUInteger theButtonIndex) {
+//      NSString * buttonTitle = [sheet buttonTitleAtIndex:theButtonIndex];
+//      SHBlockAssert([title isEqualToString:buttonTitle], @"Button title is set");
+//    }];
+//  }
+//  
+//  NSUInteger cancelIndex      = 3;
+//  NSUInteger destructiveIndex = 4;
+//  
+//  [sheet SH_setCancelButtonWithTitle:@"Cancel" withBlock:^(NSUInteger theButtonIndex) {
+//    NSLog(@"Cancel");
+//    SHBlockAssert(theButtonIndex == cancelIndex ,
+//                  @"Cancel button index is 3");
+//  }];
+//  
+//  SHBlockAssert(sheet.cancelButtonIndex == cancelIndex ,
+//                @"Cancel button index is 3");
+//  
+//  [sheet SH_setDestructiveButtonWithTitle:@"Destroy" withBlock:^(NSUInteger theButtonIndex) {
+//    NSLog(@"Destroy");
+//    SHBlockAssert(theButtonIndex == destructiveIndex ,
+//                  @"Destructive button index is 4");
+//  }];
+//  
+//  SHBlockAssert(sheet.destructiveButtonIndex == destructiveIndex ,
+//                @"Destructive button index 4");
+//  
+//  [sheet addButtonWithTitle:@"Weird button"];
+//  
+//  [sheet showInView:self.view];
+//  
+//}
+//
+//-(IBAction)unwinder:(UIStoryboardSegue *)theSegue; {
+//  
+//}
+//
+//@end

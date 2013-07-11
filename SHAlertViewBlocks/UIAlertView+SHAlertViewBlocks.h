@@ -1,47 +1,19 @@
-SHAlertViewBlocks
-==========
+//
+//  UIAlertView+SHAlertViewBlocks.h
+//  Example
+//
+//  Created by Seivan Heidari on 5/16/13.
+//  Copyright (c) 2013 Seivan Heidari. All rights reserved.
+//
 
-Overview
---------
-The blocks are automatically removed once the alert is gone, so it isn't necessary to clean up - Swizzle Free(™)
+#pragma mark -
+#pragma mark Block Defs
+typedef void (^SHAlertViewBlock)(NSUInteger theButtonIndex);
+typedef void (^SHAlertViewShowBlock)(UIAlertView * theAlertView);
+typedef void (^SHAlertViewDismissBlock)(UIAlertView * theAlertView, NSUInteger theButtonIndex);
 
-### API
+@interface UIAlertView (SHAlertViewBlocks)
 
-#### [Init](https://github.com/seivan/SHAlertViewBlocks#init-1)
-
-#### [Add](https://github.com/seivan/SHAlertViewBlocks#add-1)
-
-#### [Properties](https://github.com/seivan/SHAlertViewBlocks#properties-1)
-
-
-Installation
-------------
-
-```ruby
-pod 'SHAlertViewBlocks'
-```
-
-***
-
-Setup
------
-
-Put this either in specific files or your project prefix file
-
-```objective-c
-#import "UIAlertView+SHAlertViewBlocks.h"
-```
-or
-```objective-c
-#import "SHAlertViewBlocks.h"
-```
-
-API
------
-
-### Init
-
-```objective-c
 #pragma mark -
 #pragma mark Init
 +(instancetype)SH_alertViewWithTitle:(NSString *)theTitle withMessage:(NSString *)theMessage;
@@ -53,11 +25,6 @@ API
                            withBlock:(SHAlertViewBlock)theBlock;
 
 
-```
-
-### Add
-
-```objective-c
 #pragma mark -
 #pragma mark Adding
 -(NSUInteger)SH_addButtonWithTitle:(NSString *)theTitle
@@ -68,12 +35,6 @@ API
 -(NSUInteger)SH_addButtonCancelWithTitle:(NSString *)theTitle
                                withBlock:(SHAlertViewBlock)theBlock;
 
-
-```
-
-### Properties
-
-```objective-c
 #pragma mark -
 #pragma mark Properties
 
@@ -104,21 +65,4 @@ API
 @property(nonatomic,readonly) SHAlertViewDismissBlock SH_blockWillDismiss;
 @property(nonatomic,readonly) SHAlertViewDismissBlock SH_blockDidDismiss;
 
-
-```
-
-
-Contact
--------
-
-If you end up using SHAlertViewBlocks in a project, I'd love to hear about it.
-
-email: [seivan.heidari@icloud.com](mailto:seivan.heidari@icloud.com)  
-twitter: [@seivanheidari](https://twitter.com/seivanheidari)
-
-## License
-
-SHAlertViewBlocks is © 2013 [Seivan](http://www.github.com/seivan) and may be freely
-distributed under the [MIT license](http://opensource.org/licenses/MIT).
-See the [`LICENSE.md`](https://github.com/seivan/SHAlertViewBlocks/blob/master/LICENSE.md) file.
-
+@end
