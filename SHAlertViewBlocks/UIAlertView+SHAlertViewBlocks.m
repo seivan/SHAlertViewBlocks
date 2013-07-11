@@ -35,7 +35,7 @@ static NSString * const SH_blockDidDismiss  = @"SH_blockDidDismiss";
   self = [super init];
   if (self) {
     self.mapBlocks            = [NSMapTable weakToStrongObjectsMapTable];
-//    [self SH_memoryDebugger];
+    [self SH_memoryDebugger];
   }
   
   return self;
@@ -129,7 +129,7 @@ static NSString * const SH_blockDidDismiss  = @"SH_blockDidDismiss";
 #pragma mark -
 #pragma mark Init
 +(instancetype)SH_alertViewWithTitle:(NSString *)theTitle withMessage:(NSString *)theMessage; {
-  
+  return [[self alloc] initWithTitle:theTitle message:theMessage delegate:[SHAlertViewBlocksManager sharedManager] cancelButtonTitle:nil otherButtonTitles:nil, nil];
 
 }
 
@@ -138,8 +138,15 @@ static NSString * const SH_blockDidDismiss  = @"SH_blockDidDismiss";
                         buttonTitles:(NSArray *)theButtonTitles
                          cancelTitle:(NSString *)theCancelTitle
                            withBlock:(SHAlertViewBlock)theBlock; {
-  
+  UIAlertView * alert = [self SH_alertViewWithTitle:theTitle withMessage:theMessage];
 
+  for (NSString * title in theButtonTitles)
+    [alert SH_addButtonWithTitle:title withBlock:theBlock];
+  
+  if(theCancelTitle)
+    [alert SH_addButtonCancelWithTitle:theCancelTitle withBlock:theBlock];
+  
+  return alert;
 
 }
 
