@@ -16,6 +16,8 @@ static NSString * const SH_blockDidDismiss  = @"SH_blockDidDismiss";
 
 static NSString * const SH_blockAlertViewShouldEnableFirstOtherButton = @"SH_blockAlertViewShouldEnableFirstOtherButton";
 
+static NSString * const SH_firstButtonDisabled = @"SH_firstButtonDisabled";
+
 
 @interface UIAlertView ()
 @property(nonatomic,strong) NSMutableDictionary * mapOfBlocks;
@@ -135,8 +137,13 @@ static NSString * const SH_blockAlertViewShouldEnableFirstOtherButton = @"SH_blo
 #pragma mark -
 #pragma mark Init
 +(instancetype)SH_alertViewWithTitle:(NSString *)theTitle withMessage:(NSString *)theMessage; {
-  return [[self alloc] initWithTitle:theTitle message:theMessage delegate:[SHAlertViewBlocksManager sharedManager] cancelButtonTitle:nil otherButtonTitles:nil, nil];
+  UIAlertView * alert = [[self alloc] initWithTitle:theTitle
+                                            message:theMessage
+                                           delegate:[SHAlertViewBlocksManager sharedManager] cancelButtonTitle:nil
+                                  otherButtonTitles:nil, nil];
+  alert.mapOfBlocks[SH_firstButtonDisabled] = @(YES);
 
+  return alert;
 }
 
 +(instancetype)SH_alertViewWithTitle:(NSString *)theTitle
@@ -147,7 +154,7 @@ static NSString * const SH_blockAlertViewShouldEnableFirstOtherButton = @"SH_blo
   NSString * firstButton = nil;
   if(theButtonTitles.count > 0)
     firstButton = theButtonTitles[0];
-
+    
   theButtonTitles = [theButtonTitles subarrayWithRange:NSMakeRange(1, theButtonTitles.count-1)];
   
   UIAlertView * alert = [[self alloc] initWithTitle:theTitle
@@ -156,10 +163,15 @@ static NSString * const SH_blockAlertViewShouldEnableFirstOtherButton = @"SH_blo
                                   cancelButtonTitle:theCancelTitle
                                   otherButtonTitles:firstButton, nil];
   
+  if(firstButton == nil)
+    alert.mapOfBlocks[SH_firstButtonDisabled] = @(YES);
+  
   if(theCancelTitle)
     [alert SH_setButtonCancelBlock:theBlock];
+  
   if(firstButton)
     [alert SH_setButtonBlockForIndex:alert.firstOtherButtonIndex withBlock:theBlock];
+  
   for (NSString * title in theButtonTitles)
     [alert SH_addButtonWithTitle:title withBlock:theBlock];
   
@@ -223,6 +235,7 @@ static NSString * const SH_blockAlertViewShouldEnableFirstOtherButton = @"SH_blo
 }
 
 -(void)SH_setFirstButtonEnabled:(SHAlertViewFirstButtonEnabledBlock)theBlock; {
+  NSAssert(self.mapOfBlocks[SH_firstButtonDisabled] == nil, @"Can't use SHAlertViewFirstButtonEnabledBlock without passing button title with an initializer");
   [self addBlock:theBlock forKey:SH_blockAlertViewShouldEnableFirstOtherButton];
 }
 

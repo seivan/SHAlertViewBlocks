@@ -64,9 +64,10 @@ API
                          withBlock:(SHAlertViewBlock)theBlock;
 
 
-///Will add a new cancel button and make previous cancel buttons to normal
+///Will add a new cancel button and make previous cancel buttons to a normal button
 -(NSUInteger)SH_addButtonCancelWithTitle:(NSString *)theTitle
                                withBlock:(SHAlertViewBlock)theBlock;
+
 
 
 ```
@@ -90,6 +91,8 @@ API
 -(void)SH_setWillDismissBlock:(SHAlertViewDismissBlock)theBlock;
 -(void)SH_setDidDismissBlock:(SHAlertViewDismissBlock)theBlock;
 
+-(void)SH_setFirstButtonEnabled:(SHAlertViewFirstButtonEnabledBlock)theBlock;
+
 #pragma mark -
 #pragma mark Getters
 -(SHAlertViewBlock)SH_blockForButtonIndex:(NSUInteger)theButtonIndex;
@@ -103,6 +106,8 @@ API
 
 @property(nonatomic,readonly) SHAlertViewDismissBlock SH_blockWillDismiss;
 @property(nonatomic,readonly) SHAlertViewDismissBlock SH_blockDidDismiss;
+
+@property(nonatomic,readonly) SHAlertViewFirstButtonEnabledBlock SH_blockFirstButtonEnabled;
 
 
 ```
