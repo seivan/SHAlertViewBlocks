@@ -19,17 +19,26 @@
 
 -(void)viewDidAppear:(BOOL)animated; {
   self.view.backgroundColor = [UIColor blackColor];
-  [self popUpActionSheet];
+  [self popUpAlert];
 }
 
 -(void)popUpAlertAgain; {
-  UIAlertView * alert = [UIAlertView SH_alertViewWithTitle:@"New Title" andMessage:@"Message" buttonTitles:@[@"First", @"Second"] cancelTitle:@"Cancel" withBlock:^(NSUInteger theButtonIndex) {
+  UIAlertView * alert = [UIAlertView SH_alertViewWithTitle:@"New Title" andMessage:@"Message" buttonTitles:@[@"First"] cancelTitle:@"Cancel" withBlock:^(NSUInteger theButtonIndex) {
     SHBlockAssert(theButtonIndex >= 0, @"Button Index is more or equal to 0");
   }];
-  
+  alert.alertViewStyle = UIAlertViewStylePlainTextInput;
+  [alert SH_addButtonWithTitle:@"Second" withBlock:nil];
   SHBlockAssert(alert.numberOfButtons == 3 , @"Must have 3 buttons");
   SHBlockAssert(alert.SH_blockForCancelButton != nil , @"Cancel has a block");
-  SHBlockAssert(alert.cancelButtonIndex == 2 , @"Cancel index is 2");
+  SHBlockAssert(alert.cancelButtonIndex == 0 , @"Cancel index is 0");
+  
+  SHBlockAssert(alert.SH_blockFirstButtonEnabled == nil, @"No block for SH_blockFirstButtonEnabled");
+  [alert SH_setFirstButtonEnabled:^BOOL(UIAlertView *theAlertView) {
+    SHBlockAssert(theAlertView, @"Must pass theAlertView");
+    NSUInteger random = arc4random() % 5;
+    return random == 1;
+  }];
+  SHBlockAssert(alert.SH_blockFirstButtonEnabled, @"Must have block for SH_blockFirstButtonEnabled");
   [alert show];
 }
 
@@ -66,22 +75,18 @@
   [alert addButtonWithTitle:@"Cancel"];
   
   alert.cancelButtonIndex = 4;
-  [sheet SH_setButtonCancelBlock:block];
-  [sheet SH_setButtonDestructiveBlock:block];
-  SHBlockAssert([sheet SH_blockForButtonIndex:4] == [sheet SH_blockForCancelButton],
+  [alert SH_setButtonCancelBlock:block];
+
+  SHBlockAssert([alert SH_blockForButtonIndex:4] == [alert SH_blockForCancelButton],
                 @"Button Index 5 should be equal to SH_blockForCancel");
-  SHBlockAssert([sheet SH_blockForButtonIndex:5] == [sheet SH_blockForCancelButton],
-                @"Button Index 6 should be equal to SH_blockForDestructive");
   
-  SHBlockAssert(block == [sheet SH_blockForCancelButton],
+  SHBlockAssert([alert SH_blockForCancelButton] == block,
                 @"Button Index 5 should be equal to SH_blockForCancel");
-  SHBlockAssert(block == [sheet SH_blockForCancelButton],
-                @"Button Index 6 should be equal to SH_blockForDestructive");
   
-  [sheet addButtonWithTitle:@"Weird button"];
+  [alert addButtonWithTitle:@"Weird button"];
   
   
-  [sheet showInView:self.view];
+  [alert show];
   
 }
 

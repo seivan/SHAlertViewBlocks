@@ -12,6 +12,8 @@ typedef void (^SHAlertViewBlock)(NSUInteger theButtonIndex);
 typedef void (^SHAlertViewShowBlock)(UIAlertView * theAlertView);
 typedef void (^SHAlertViewDismissBlock)(UIAlertView * theAlertView, NSUInteger theButtonIndex);
 
+typedef BOOL (^SHAlertViewFirstButtonEnabledBlock)(UIAlertView * theAlertView);
+
 @interface UIAlertView (SHAlertViewBlocks)
 
 #pragma mark -
@@ -51,6 +53,8 @@ typedef void (^SHAlertViewDismissBlock)(UIAlertView * theAlertView, NSUInteger t
 -(void)SH_setWillDismissBlock:(SHAlertViewDismissBlock)theBlock;
 -(void)SH_setDidDismissBlock:(SHAlertViewDismissBlock)theBlock;
 
+-(void)SH_setFirstButtonEnabled:(SHAlertViewFirstButtonEnabledBlock)theBlock;
+
 #pragma mark -
 #pragma mark Getters
 -(SHAlertViewBlock)SH_blockForButtonIndex:(NSUInteger)theButtonIndex;
@@ -64,5 +68,7 @@ typedef void (^SHAlertViewDismissBlock)(UIAlertView * theAlertView, NSUInteger t
 
 @property(nonatomic,readonly) SHAlertViewDismissBlock SH_blockWillDismiss;
 @property(nonatomic,readonly) SHAlertViewDismissBlock SH_blockDidDismiss;
+
+@property(nonatomic,readonly) SHAlertViewFirstButtonEnabledBlock SH_blockFirstButtonEnabled;
 
 @end
