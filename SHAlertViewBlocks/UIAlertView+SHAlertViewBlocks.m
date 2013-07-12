@@ -90,9 +90,6 @@ static NSString * const SH_blockDidDismiss  = @"SH_blockDidDismiss";
 }
 
 
-
-
-
 -(void)alertView:(UIAlertView *)alertView willDismissWithButtonIndex:(NSInteger)buttonIndex; {
   NSDictionary * mapBlocks = [self.mapBlocks objectForKey:alertView];
   SHAlertViewDismissBlock block = mapBlocks[SH_blockWillDismiss];
@@ -104,7 +101,7 @@ static NSString * const SH_blockDidDismiss  = @"SH_blockDidDismiss";
   NSDictionary * mapBlocks = [self.mapBlocks objectForKey:alertView];
   SHAlertViewDismissBlock block = mapBlocks[SH_blockDidDismiss];
   if(block) block(alertView, buttonIndex);
-//  actionSheet.mapOfBlocks = nil;
+  alertView.mapOfBlocks = nil;
 }
 
 
