@@ -40,7 +40,7 @@ static NSString * const SH_firstButtonDisabled = @"SH_firstButtonDisabled";
   self = [super init];
   if (self) {
     self.mapBlocks            = [NSMapTable weakToStrongObjectsMapTable];
-    [self SH_memoryDebugger];
+//    [self SH_memoryDebugger];
   }
   
   return self;
