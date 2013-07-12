@@ -31,7 +31,7 @@ typedef void (^SHAlertViewDismissBlock)(UIAlertView * theAlertView, NSUInteger t
                          withBlock:(SHAlertViewBlock)theBlock;
 
 
-///Will add a new cancel button and make previous cancel buttons to normal
+///Will add a new cancel button and make previous cancel buttons to a normal button
 -(NSUInteger)SH_addButtonCancelWithTitle:(NSString *)theTitle
                                withBlock:(SHAlertViewBlock)theBlock;
 
