@@ -23,7 +23,7 @@
 }
 
 -(void)popUpAlertAgain; {
-  UIAlertView * alert = [UIAlertView SH_alertViewWithTitle:@"New Title" andMessage:@"Message" buttonTitles:@[@"First"] cancelTitle:@"Cancel" withBlock:^(NSUInteger theButtonIndex) {
+  UIAlertView * alert = [UIAlertView SH_alertViewWithTitle:@"New Title" andMessage:@"Message" buttonTitles:@[@"First"] cancelTitle:@"Cancel" withBlock:^(NSInteger theButtonIndex) {
     SHBlockAssert(theButtonIndex >= 0, @"Button Index is more or equal to 0");
   }];
   alert.alertViewStyle = UIAlertViewStylePlainTextInput;
@@ -32,13 +32,13 @@
   SHBlockAssert(alert.SH_blockForCancelButton != nil , @"Cancel has a block");
   SHBlockAssert(alert.cancelButtonIndex == 0 , @"Cancel index is 0");
   
-  SHBlockAssert(alert.SH_blockFirstButtonEnabled == nil, @"No block for SH_blockFirstButtonEnabled");
-  [alert SH_setFirstButtonEnabled:^BOOL(UIAlertView *theAlertView) {
+  SHBlockAssert(alert.SH_blockForFirstButtonEnabled == nil, @"No block for SH_blockFirstButtonEnabled");
+  [alert SH_setFirstButtonEnabledBlock:^BOOL(UIAlertView *theAlertView) {
     SHBlockAssert(theAlertView, @"Must pass theAlertView");
-    NSUInteger random = arc4random() % 5;
+    NSInteger random = arc4random() % 5;
     return random == 1;
   }];
-  SHBlockAssert(alert.SH_blockFirstButtonEnabled, @"Must have block for SH_blockFirstButtonEnabled");
+  SHBlockAssert(alert.SH_blockForFirstButtonEnabled, @"Must have block for SH_blockFirstButtonEnabled");
   [alert show];
 }
 
@@ -52,7 +52,7 @@
   SHBlockAssert([alert.title isEqualToString:title], @"Title should be set");
   SHBlockAssert(alert.message == nil, @"Title should be set");
   
-  SHAlertViewBlock block = ^(NSUInteger theButtonIndex) {
+  SHAlertViewBlock block = ^(NSInteger theButtonIndex) {
     SHBlockAssert(theButtonIndex >= 0, @"Must have a buttonIndex");
     [weakSelf popUpAlertAgain];
   };

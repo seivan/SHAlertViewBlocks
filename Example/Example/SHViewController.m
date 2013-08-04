@@ -42,9 +42,9 @@
   SHBlockAssert([alert.title isEqualToString:title], @"Title should be set");
   SHBlockAssert([alert.message isEqualToString:message], @"Message should be set");
   
-  for (NSUInteger i = 0; i != 3; i++) {
+  for (NSInteger i = 0; i != 3; i++) {
     NSString * title = [NSString stringWithFormat:@"Button %d", i];
-    [alert SH_addButtonWithTitle:title withBlock:^(NSUInteger theButtonIndex) {
+    [alert SH_addButtonWithTitle:title withBlock:^(NSInteger theButtonIndex) {
       NSString * buttonTitle = [alert buttonTitleAtIndex:theButtonIndex];
       SHBlockAssert([title isEqualToString:buttonTitle], @"Button title is set");
       selectedIndex = theButtonIndex;
@@ -60,7 +60,7 @@
   
   NSUInteger cancelIndex      = 3;
   
-  [alert SH_addButtonCancelWithTitle:@"Cancel" withBlock:^(NSUInteger theButtonIndex) {
+  [alert SH_addButtonCancelWithTitle:@"Cancel" withBlock:^(NSInteger theButtonIndex) {
     NSLog(@"Cancel");
     SHBlockAssert(theButtonIndex == cancelIndex ,
                   @"Cancel button index is 3");
@@ -86,12 +86,12 @@
     SHBlockAssert(theAlertView, @"Must pass the theAlertView for didShow");
   }];
   
-  [alert SH_setWillDismissBlock:^(UIAlertView * theAlertView, NSUInteger theButtonIndex) {
+  [alert SH_setWillDismissBlock:^(UIAlertView * theAlertView, NSInteger theButtonIndex) {
     SHBlockAssert(theAlertView, @"Must pass the theAlertView");
     SHBlockAssert(selectedIndex == theButtonIndex, @"Must pass selected index for willDismiss");
   }];
   
-  [alert SH_setDidDismissBlock:^(UIAlertView * theAlertView, NSUInteger theButtonIndex) {
+  [alert SH_setDidDismissBlock:^(UIAlertView * theAlertView, NSInteger theButtonIndex) {
     SHBlockAssert(theAlertView, @"Must pass the theAlertView");
     SHBlockAssert(selectedIndex == theButtonIndex, @"Must pass selected index fordidDismiss");
   }];
