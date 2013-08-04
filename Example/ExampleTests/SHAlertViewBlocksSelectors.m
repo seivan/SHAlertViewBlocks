@@ -113,22 +113,55 @@
 
 
 -(void)testSH_setWillShowBlock; {
+  SHAlertViewShowBlock block = ^void(UIAlertView *theAlertView) {
+  };
+  [self.alertView SH_setWillShowBlock:block];
+  STAssertEqualObjects(block, self.alertView.SH_blockWillShow, nil);
   
 }
 
 -(void)testSH_setDidShowBlock; {
-    
+  SHAlertViewShowBlock block = ^void(UIAlertView *theAlertView) {
+  };
+  [self.alertView SH_setDidShowBlock:block];
+  STAssertEqualObjects(block, self.alertView.SH_blockDidShow, nil);
+  
 }
 
 -(void)testSH_setWillDismissBlock; {
-  
+  SHAlertViewDismissBlock block = ^void(UIAlertView *theAlertView, NSInteger theButtonIndex){
+    
+  };
+  [self.alertView SH_setWillDismissBlock:block];
+  STAssertEqualObjects(block, self.alertView.SH_blockWillDismiss, nil);
+
+
 }
 -(void)testSH_setDidDismissBlock; {
+  SHAlertViewDismissBlock block = ^void(UIAlertView *theAlertView, NSInteger theButtonIndex){
+    
+  };
+  [self.alertView SH_setDidDismissBlock:block];
+  STAssertEqualObjects(block, self.alertView.SH_blockDidDismiss, nil);
   
 }
 
 -(void)testSH_setFirstButtonEnabledBlock; {
+  self.alertView = [UIAlertView SH_alertViewWithTitle:@"Some title" andMessage:@"Some MEssage" buttonTitles:@[self.buttonTitle] cancelTitle:self.buttonTitle withBlock:self.block];
   
+  SHAlertViewFirstButtonEnabledBlock block = ^BOOL(UIAlertView * theAlertView) {
+    return YES;
+  };
+  [self.alertView SH_setFirstButtonEnabledBlock:block];
+  STAssertEqualObjects(block, self.alertView.SH_blockForFirstButtonEnabled, nil);
+  
+}
+-(void)testSH_setFirstButtonEnabledBlockWithoutButton; {
+  SHAlertViewFirstButtonEnabledBlock block = ^BOOL(UIAlertView * theAlertView) {
+    return YES;
+  };
+  STAssertThrows([self.alertView SH_setFirstButtonEnabledBlock:block], nil);
+  STAssertNil(self.alertView.SH_blockForFirstButtonEnabled, nil);
 }
 
 
