@@ -34,8 +34,8 @@ static NSString * const SH_firstButtonDisabled = @"SH_firstButtonDisabled";
 @end
 @implementation SHAlertViewBlocksManager
 
-#pragma mark -
-#pragma mark Init & Dealloc
+
+#pragma mark - Init & Dealloc
 -(instancetype)init; {
   self = [super init];
   if (self) {
@@ -72,8 +72,8 @@ static NSString * const SH_firstButtonDisabled = @"SH_firstButtonDisabled";
 
 #
 
-#pragma mark -
-#pragma mark <UIAlertViewDelegate>
+
+#pragma mark - <UIAlertViewDelegate>
 
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex;{
   NSDictionary * mapBlocks = [self.mapBlocks objectForKey:alertView];
@@ -134,8 +134,8 @@ static NSString * const SH_firstButtonDisabled = @"SH_firstButtonDisabled";
 @implementation UIAlertView (SHAlertViewBlocks)
 
 
-#pragma mark -
-#pragma mark Init
+
+#pragma mark - Init
 +(instancetype)SH_alertViewWithTitle:(NSString *)theTitle withMessage:(NSString *)theMessage; {
   UIAlertView * alert = [[self alloc] initWithTitle:theTitle
                                             message:theMessage
@@ -180,9 +180,9 @@ static NSString * const SH_firstButtonDisabled = @"SH_firstButtonDisabled";
 }
 
 
-#pragma mark -
-#pragma mark Adding
--(NSUInteger)SH_addButtonWithTitle:(NSString *)theTitle
+
+#pragma mark - Adding
+-(NSInteger)SH_addButtonWithTitle:(NSString *)theTitle
                          withBlock:(SHAlertViewBlock)theBlock; {
   NSUInteger indexButton = [self addButtonWithTitle:theTitle];
   [self addBlock:[theBlock copy]  forIndex:indexButton];
@@ -193,7 +193,7 @@ static NSString * const SH_firstButtonDisabled = @"SH_firstButtonDisabled";
 
 
 
--(NSUInteger)SH_addButtonCancelWithTitle:(NSString *)theTitle
+-(NSInteger)SH_addButtonCancelWithTitle:(NSString *)theTitle
                                withBlock:(SHAlertViewBlock)theBlock;{
   NSUInteger indexButton = [self SH_addButtonWithTitle:theTitle withBlock:theBlock];
   [self setCancelButtonIndex:indexButton];
@@ -201,12 +201,10 @@ static NSString * const SH_firstButtonDisabled = @"SH_firstButtonDisabled";
   
 }
 
-#pragma mark -
-#pragma mark Properties
 
-#pragma mark -
-#pragma mark Setters
--(void)SH_setButtonBlockForIndex:(NSUInteger)theButtonIndex
+#pragma mark - Properties
+#pragma mark - Setters
+-(void)SH_setButtonBlockForIndex:(NSInteger)theButtonIndex
                        withBlock:(SHAlertViewBlock)theBlock;{
   [self addBlock:theBlock forIndex:theButtonIndex];
 }
@@ -234,14 +232,14 @@ static NSString * const SH_firstButtonDisabled = @"SH_firstButtonDisabled";
   [self addBlock:theBlock forKey:SH_blockDidDismiss]; 
 }
 
--(void)SH_setFirstButtonEnabled:(SHAlertViewFirstButtonEnabledBlock)theBlock; {
+-(void)SH_setFirstButtonEnabledBlock:(SHAlertViewFirstButtonEnabledBlock)theBlock; {
   NSAssert(self.mapOfBlocks[SH_firstButtonDisabled] == nil, @"Can't use SHAlertViewFirstButtonEnabledBlock without passing button title with an initializer");
   [self addBlock:theBlock forKey:SH_blockAlertViewShouldEnableFirstOtherButton];
 }
 
-#pragma mark -
-#pragma mark Getters
--(SHAlertViewBlock)SH_blockForButtonIndex:(NSUInteger)theButtonIndex; {
+
+#pragma mark - Getters
+-(SHAlertViewBlock)SH_blockForButtonIndex:(NSInteger)theButtonIndex; {
   return self.mapOfBlocks[@(theButtonIndex)];
 }
 
@@ -269,12 +267,12 @@ static NSString * const SH_firstButtonDisabled = @"SH_firstButtonDisabled";
   return self.mapOfBlocks[SH_blockDidDismiss];
 }
 
--(SHAlertViewFirstButtonEnabledBlock)SH_blockFirstButtonEnabled; {
+-(SHAlertViewFirstButtonEnabledBlock)SH_blockForFirstButtonEnabled; {
   return self.mapOfBlocks[SH_blockAlertViewShouldEnableFirstOtherButton];
 }
 
-#pragma mark -
-#pragma mark Privates
+
+#pragma mark - Privates
 -(void)addBlock:(SHAlertViewBlock)theBlock forIndex:(NSUInteger)theIndex; {
   if(theBlock) self.mapOfBlocks[@(theIndex)] = theBlock;
   else [self.mapOfBlocks removeObjectForKey:@(theIndex)];
