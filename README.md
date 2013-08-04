@@ -1,5 +1,8 @@
 SHAlertViewBlocks
 ==========
+[![Build Status](https://travis-ci.org/seivan/SHAlertViewBlocks.png?branch=master)](https://travis-ci.org/seivan/SHAlertViewBlocks)
+[![Version](http://cocoapod-badges.herokuapp.com/v/SHAlertViewBlocks/badge.png)](http://cocoadocs.org/docsets/SHAlertViewBlocks)
+[![Platform](http://cocoapod-badges.herokuapp.com/p/SHAlertViewBlocks/badge.png)](http://cocoadocs.org/docsets/SHAlertViewBlocks)
 
 Overview
 --------
