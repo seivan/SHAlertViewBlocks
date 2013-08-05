@@ -94,7 +94,7 @@ API
 -(void)SH_setWillDismissBlock:(SHAlertViewDismissBlock)theBlock;
 -(void)SH_setDidDismissBlock:(SHAlertViewDismissBlock)theBlock;
 
--(void)SH_setFirstButtonEnabled:(SHAlertViewFirstButtonEnabledBlock)theBlock;
+-(void)SH_setFirstButtonEnabledBlock:(SHAlertViewFirstButtonEnabledBlock)theBlock;
 
 #pragma mark -
 #pragma mark Getters
@@ -110,7 +110,7 @@ API
 @property(nonatomic,readonly) SHAlertViewDismissBlock SH_blockWillDismiss;
 @property(nonatomic,readonly) SHAlertViewDismissBlock SH_blockDidDismiss;
 
-@property(nonatomic,readonly) SHAlertViewFirstButtonEnabledBlock SH_blockFirstButtonEnabled;
+@property(nonatomic,readonly) SHAlertViewFirstButtonEnabledBlock SH_blockForFirstButtonEnabled;
 
 
 ```
