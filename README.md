@@ -63,12 +63,12 @@ API
 ```objective-c
 #pragma mark -
 #pragma mark Adding
--(NSUInteger)SH_addButtonWithTitle:(NSString *)theTitle
+-(NSInteger)SH_addButtonWithTitle:(NSString *)theTitle
                          withBlock:(SHAlertViewBlock)theBlock;
 
 
 ///Will add a new cancel button and make previous cancel buttons to a normal button
--(NSUInteger)SH_addButtonCancelWithTitle:(NSString *)theTitle
+-(NSInteger)SH_addButtonCancelWithTitle:(NSString *)theTitle
                                withBlock:(SHAlertViewBlock)theBlock;
 
 
@@ -83,7 +83,7 @@ API
 
 #pragma mark -
 #pragma mark Setters
--(void)SH_setButtonBlockForIndex:(NSUInteger)theButtonIndex
+-(void)SH_setButtonBlockForIndex:(NSInteger)theButtonIndex
                        withBlock:(SHAlertViewBlock)theBlock;
 
 -(void)SH_setButtonCancelBlock:(SHAlertViewBlock)theBlock;
@@ -94,11 +94,11 @@ API
 -(void)SH_setWillDismissBlock:(SHAlertViewDismissBlock)theBlock;
 -(void)SH_setDidDismissBlock:(SHAlertViewDismissBlock)theBlock;
 
--(void)SH_setFirstButtonEnabled:(SHAlertViewFirstButtonEnabledBlock)theBlock;
+-(void)SH_setFirstButtonEnabledBlock:(SHAlertViewFirstButtonEnabledBlock)theBlock;
 
 #pragma mark -
 #pragma mark Getters
--(SHAlertViewBlock)SH_blockForButtonIndex:(NSUInteger)theButtonIndex;
+-(SHAlertViewBlock)SH_blockForButtonIndex:(NSInteger)theButtonIndex;
 
 
 @property(nonatomic,readonly) SHAlertViewBlock SH_blockForCancelButton;
@@ -110,7 +110,7 @@ API
 @property(nonatomic,readonly) SHAlertViewDismissBlock SH_blockWillDismiss;
 @property(nonatomic,readonly) SHAlertViewDismissBlock SH_blockDidDismiss;
 
-@property(nonatomic,readonly) SHAlertViewFirstButtonEnabledBlock SH_blockFirstButtonEnabled;
+@property(nonatomic,readonly) SHAlertViewFirstButtonEnabledBlock SH_blockForFirstButtonEnabled;
 
 
 ```

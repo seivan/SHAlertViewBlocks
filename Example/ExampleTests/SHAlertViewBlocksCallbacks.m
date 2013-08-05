@@ -9,7 +9,7 @@
 
 #import "SHAlertViewBlocksSuper.h"
 @interface SHAlertViewBlocksCallbacks : SHAlertViewBlocksSuper
-
+@property(nonatomic,assign) NSInteger isAsserted;
 @end
 
 
@@ -17,145 +17,198 @@
 
 @implementation SHAlertViewBlocksCallbacks
 
-//-(void)setUp; {
-//  [super setUp];
-//  self.block = ^(NSInteger theButtonIndex) {};
-//  self.sheet = [UIActionSheet SH_actionSheetWithTitle:@"Title"];
-//  self.vc = UIViewController.new;
-//  [UIApplication sharedApplication].keyWindow.rootViewController = self.vc;
-//  
-//  
-//}
-//
-//-(void)tearDown; {
-//  [super tearDown];
-//}
-//
-//-(void)testSeparateBlocksPerButton; {
-//  __block BOOL didCallCancelButton      = NO;
-//  __block BOOL didCallButtonOne         = NO;
-//  __block BOOL didCallButtonTwo         = NO;
-//  __block BOOL didCallDestructiveButton = NO;
-//
-////  [self SH_performAsyncTestsWithinBlock:^(BOOL *didFinish) {
-//    
-//    [self.sheet SH_addButtonCancelWithTitle:@"Cancel" withBlock:^(NSInteger theButtonIndex) {
-//      didCallCancelButton = YES;
-//      [self.sheet SH_blockForButtonIndex:1](1);
-//    }];
-//  
-//    [self.sheet SH_addButtonWithTitle:@"Button1" withBlock:^(NSInteger theButtonIndex) {
-//      didCallButtonOne = YES;
-//      [self.sheet SH_blockForButtonIndex:2](2);
-//    }];
-//  
-//    [self.sheet SH_addButtonWithTitle:@"Button2" withBlock:^(NSInteger theButtonIndex) {
-//      didCallButtonTwo = YES;
-//      self.sheet.SH_blockForDestructiveButton(self.sheet.destructiveButtonIndex);
-//    }];
-//  
-//    [self.sheet SH_addButtonDestructiveWithTitle:@"Delete" withBlock:^(NSInteger theButtonIndex) {
-//      didCallDestructiveButton = YES;
-////      *didFinish = YES;
-//    
-//    }];
-//    
-//    self.sheet.SH_blockForCancelButton(self.sheet.cancelButtonIndex);
-//    
-//    
-//  
-////    } withTimeout:5];
-//
-//  STAssertTrue(didCallCancelButton, nil);
-//  STAssertTrue(didCallButtonOne, nil);
-//  STAssertTrue(didCallButtonTwo, nil);
-//  STAssertTrue(didCallDestructiveButton, nil);
-//
-//
-//
-//}
-//
-//-(void)testOneBlockForAllButtons; {
-//  __block BOOL didCallCancelButton      = NO;
-//  __block BOOL didCallButtonOne         = NO;
-//  __block BOOL didCallDestructiveButton = NO;
-//
-////  [self SH_performAsyncTestsWithinBlock:^(BOOL *didFinish) {
-//    self.sheet = [UIActionSheet SH_actionSheetWithTitle:@"Title"
-//                                           buttonTitles:@[@"Button1"]
-//                                            cancelTitle:@"Button2"
-//                                       destructiveTitle:@"Button0"
-//                                              withBlock:^(NSInteger theButtonIndex) {
-//                                                switch (theButtonIndex) {
-//                                                  case 0:
-//                                                    didCallDestructiveButton = YES;
-//                                                    break;
-//                                                  case 1:
-//                                                    didCallButtonOne = YES;
-//                                                    break;
-//                                                  case 2:
-//                                                    didCallCancelButton = YES;
-//                                                    break;
-//                                                  default:
-//                                                    break;
-//                                                }
-//                                                
-//                                                
-//                                              }];
-//
-////  } withTimeout:5];
-//
-//  self.sheet.SH_blockForDestructiveButton(self.sheet.destructiveButtonIndex);
-//  STAssertTrue(didCallDestructiveButton, nil);
-//  
-//  [self.sheet SH_blockForButtonIndex:1](1);
-//  STAssertTrue(didCallButtonOne, nil);
-//  
-//  self.sheet.SH_blockForCancelButton(self.sheet.cancelButtonIndex);
-//  STAssertTrue(didCallCancelButton, nil);
-//}
-//
-//-(void)testSheetAppearanceLifeCycleBlocks; {
-//  
-//  __block BOOL willShowBlock    = NO;
-//  __block BOOL didShowBlock     = NO;
-//  __block BOOL willDismissBlock = NO;
-//  __block BOOL didDismissBlock  = NO;
-//
-//  
-//  [self.sheet SH_setWillShowBlock:^(UIActionSheet *theActionSheet) {
-//    willShowBlock = YES;
-//  }];
-//  
-//  [self.sheet SH_setDidShowBlock:^(UIActionSheet *theActionSheet) {
-//    didShowBlock = YES;
-//  }];
-//  
-//  [self.sheet SH_setWillDismissBlock:^(UIActionSheet *theActionSheet, NSInteger theButtonIndex) {
-//    willDismissBlock = YES;
-//    STAssertEqualObjects(self.sheet, theActionSheet, nil);
-//    STAssertEquals(66, theButtonIndex, nil);
-//  }];
-//  
-//  [self.sheet SH_setDidDismissBlock:^(UIActionSheet *theActionSheet, NSInteger theButtonIndex) {
-//    didDismissBlock = YES;
-//    STAssertEqualObjects(self.sheet, theActionSheet, nil);
-//    STAssertEquals(66, theButtonIndex, nil);
-//  }];
-//  
-//  self.sheet.SH_blockWillShow(self.sheet);
-//  STAssertTrue(willShowBlock, nil);
-//  
-//  self.sheet.SH_blockDidShow(self.sheet);
-//  STAssertTrue(didShowBlock, nil);
-//
-//  self.sheet.SH_blockWillDismiss(self.sheet, 66);
-//  STAssertTrue(willDismissBlock, nil);
-//
-//  self.sheet.SH_blockDidDismiss(self.sheet, 66);
-//  STAssertTrue(didDismissBlock, nil);
-//  
-//  
-//}
+
+-(void)testSH_alertViewWithTitle_andMessage_buttonTitles_cancelTitle_withBlock; {
+  __block BOOL didCallCancel = NO;
+  __block BOOL didCallButton = NO;
+  self.alertView = [UIAlertView SH_alertViewWithTitle:@"Title" andMessage:@"message" buttonTitles:@[self.buttonTitle] cancelTitle:self.buttonTitle withBlock:^(NSInteger theButtonIndex) {
+    if (self.alertView.cancelButtonIndex == theButtonIndex)
+      didCallCancel = YES;
+    else
+      didCallButton = YES;
+  
+  }];
+  
+  
+  self.alertView.SH_blockForCancelButton(self.alertView.cancelButtonIndex);
+  STAssertTrue(didCallCancel, nil);
+  [self.alertView SH_blockForButtonIndex:1](1);
+  STAssertTrue(didCallButton, nil);
+  
+  
+  
+}
+
+-(void)testSH_addButtonWithTitle_withBlock; {
+  __block BOOL didCallButton = NO;
+  [self.alertView SH_addButtonWithTitle:self.buttonTitle withBlock:^(NSInteger theButtonIndex) {
+    didCallButton = YES;
+  }];
+  [self.alertView SH_blockForButtonIndex:0](1);
+  STAssertTrue(didCallButton, nil);
+}
+
+-(void)testSH_addButtonCancelWithTitle_withBlock; {
+  __block BOOL didCallButton = NO;
+  [self.alertView SH_addButtonCancelWithTitle:self.buttonTitle withBlock:^(NSInteger theButtonIndex) {
+    didCallButton = YES;
+  }];
+  [self.alertView SH_blockForCancelButton](self.alertView.cancelButtonIndex);
+  STAssertTrue(didCallButton, nil);
+  
+}
+
+-(void)testSH_addButtonCancelWithTitle_withBlockSecond; {
+  __block BOOL didCallFirstCancel   = NO;
+  __block BOOL didCallSecondCancel = NO;
+  [self.alertView SH_addButtonCancelWithTitle:self.buttonTitle withBlock:^(NSInteger theButtonIndex) {
+    didCallFirstCancel = YES;
+  }];
+
+  [self.alertView SH_addButtonCancelWithTitle:self.buttonTitle withBlock:^(NSInteger theButtonIndex) {
+    didCallSecondCancel = YES;
+  }];
+
+  [self.alertView SH_blockForCancelButton](self.alertView.cancelButtonIndex);
+  
+  STAssertTrue(didCallSecondCancel, nil);
+  STAssertFalse(didCallFirstCancel, nil);
+
+}
+
+-(void)testSH_setButtonBlockForIndex_withBlock; {
+  __block BOOL didCallFirstBlock   = NO;
+  __block BOOL didCallSecondBlock  = NO;
+  [self.alertView SH_addButtonWithTitle:self.buttonTitle withBlock:^(NSInteger theButtonIndex) {
+    didCallFirstBlock = YES;
+  }];
+  
+  [self.alertView SH_setButtonBlockForIndex:0 withBlock:^(NSInteger theButtonIndex) {
+    STAssertEquals(theButtonIndex, 0, nil);
+    didCallSecondBlock = YES;
+  }];
+  
+  [self.alertView SH_blockForButtonIndex:0](0);
+  
+  STAssertTrue(didCallSecondBlock, nil);
+  STAssertFalse(didCallFirstBlock, nil);
+}
+
+-(void)testSH_setButtonCancelBlock; {
+  __block BOOL didCallFirstBlock   = NO;
+  __block BOOL didCallSecondBlock  = NO;
+  [self.alertView SH_addButtonCancelWithTitle:self.buttonTitle withBlock:^(NSInteger theButtonIndex) {
+    didCallFirstBlock = YES;
+  }];
+  
+
+  [self.alertView SH_setButtonCancelBlock:^(NSInteger theButtonIndex) {
+    STAssertEquals(theButtonIndex, 0, nil);
+    didCallSecondBlock = YES;
+  }];
+  
+  [self.alertView SH_blockForButtonIndex:0](self.alertView.cancelButtonIndex);
+  
+  STAssertTrue(didCallSecondBlock, nil);
+  STAssertFalse(didCallFirstBlock, nil);
+}
+
+
+-(void)testSH_setWillShowBlock; {
+  __block BOOL didCallBlock   = NO;
+  [self SH_performAsyncTestsWithinBlock:^(BOOL *didFinish) {
+    SHAlertViewShowBlock block = ^void(UIAlertView *theAlertView) {
+      STAssertEqualObjects(self.alertView, theAlertView, nil);
+      didCallBlock = YES;
+      *didFinish = YES;
+    };
+    [self.alertView SH_setWillShowBlock:block];
+    self.alertView.SH_blockWillShow(self.alertView);
+
+  } withTimeout:1];
+  
+  STAssertTrue(didCallBlock, nil);
+  
+}
+
+-(void)testSH_setDidShowBlock; {
+  __block BOOL didCallBlock   = NO;
+  [self SH_performAsyncTestsWithinBlock:^(BOOL *didFinish) {
+    SHAlertViewShowBlock block = ^void(UIAlertView *theAlertView) {
+      STAssertEqualObjects(self.alertView, theAlertView, nil);
+
+      didCallBlock = YES;
+      *didFinish = YES;
+    };
+    [self.alertView SH_setDidShowBlock:block];
+    self.alertView.SH_blockDidShow(self.alertView);
+    
+  } withTimeout:1];
+  
+  STAssertTrue(didCallBlock, nil);
+}
+
+-(void)testSH_setWillDismissBlock; {
+  __block BOOL didCallBlock   = NO;
+  [self SH_performAsyncTestsWithinBlock:^(BOOL *didFinish) {
+    [self.alertView SH_addButtonWithTitle:self.buttonTitle withBlock:self.block];
+    SHAlertViewDismissBlock block = ^void(UIAlertView *theAlertView, NSInteger theButtonIndex){
+      STAssertEqualObjects(self.alertView, theAlertView, nil);
+      STAssertEquals(555, theButtonIndex, nil);
+      didCallBlock = YES;
+      *didFinish = YES;
+    };
+    [self.alertView SH_setWillDismissBlock:block];
+    self.alertView.SH_blockWillDismiss(self.alertView, 555);
+
+    
+  } withTimeout:1];
+  
+  STAssertTrue(didCallBlock, nil);
+  
+  
+}
+-(void)testSH_setDidDismissBlock; {
+  __block BOOL didCallBlock   = NO;
+  [self SH_performAsyncTestsWithinBlock:^(BOOL *didFinish) {
+    SHAlertViewDismissBlock block = ^void(UIAlertView *theAlertView, NSInteger theButtonIndex){
+      STAssertEqualObjects(self.alertView, theAlertView, nil);
+      STAssertEquals(555, theButtonIndex, nil);
+      didCallBlock = YES;
+      *didFinish = YES;
+    };
+    [self.alertView SH_setDidDismissBlock:block];
+    self.alertView.SH_blockDidDismiss(self.alertView, 555);
+  } withTimeout:10];
+  
+  STAssertTrue(didCallBlock, nil);
+}
+
+-(void)testSH_setFirstButtonEnabledBlock; {
+  __block BOOL didCallBlock   = NO;
+  self.alertView = [UIAlertView SH_alertViewWithTitle:@"Some title" andMessage:@"Some MEssage" buttonTitles:@[self.buttonTitle] cancelTitle:self.buttonTitle withBlock:self.block];
+  
+  SHAlertViewFirstButtonEnabledBlock block = ^BOOL(UIAlertView * theAlertView) {
+    STAssertEquals(self.alertView, theAlertView, nil);
+    didCallBlock = YES;
+    return YES;
+  };
+  [self.alertView SH_setFirstButtonEnabledBlock:block];
+  STAssertTrue(self.alertView.SH_blockForFirstButtonEnabled(self.alertView), nil);
+  STAssertTrue(didCallBlock, nil);
+
+}
+
+-(void)testSH_setFirstButtonEnabledBlockWithoutButton; {
+  SHAlertViewFirstButtonEnabledBlock block = ^BOOL(UIAlertView * theAlertView) {
+    return YES;
+  };
+  STAssertThrows([self.alertView SH_setFirstButtonEnabledBlock:block], nil);
+  STAssertNil(self.alertView.SH_blockForFirstButtonEnabled, nil);
+}
+
+
+
+
 
 @end

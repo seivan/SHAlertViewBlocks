@@ -20,5 +20,6 @@
 @property(nonatomic,strong) UIAlertView         * alertView;
 @property(nonatomic,strong) NSString            * buttonTitle;
 @property(nonatomic,copy) SHAlertViewBlock        block;
+
 @end
 

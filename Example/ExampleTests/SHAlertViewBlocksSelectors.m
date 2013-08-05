@@ -19,6 +19,51 @@
   STAssertNotNil(self.alertView.delegate, nil);
 }
 
+-(void)testSetDelegateOnAddingButtons; {
+  self.alertView.delegate = nil;
+  [self.alertView SH_addButtonWithTitle:self.buttonTitle withBlock:self.block];
+  STAssertNotNil(self.alertView.delegate, nil);
+  
+  self.alertView.delegate = nil;
+  [self.alertView SH_addButtonCancelWithTitle:self.buttonTitle withBlock:self.block];
+  STAssertNotNil(self.alertView.delegate, nil);
+  
+  self.alertView.delegate = nil;
+  [self.alertView SH_setButtonBlockForIndex:0 withBlock:self.block];
+  STAssertNotNil(self.alertView.delegate, nil);
+
+  self.alertView.delegate = nil;
+  [self.alertView SH_setButtonCancelBlock:self.block];
+  STAssertNotNil(self.alertView.delegate, nil);
+  
+}
+
+-(void)testSetDelegateOnLifeCycleCallbacks; {
+  self.alertView.delegate = nil;
+  [self.alertView SH_setWillShowBlock:^(UIAlertView *theAlertView) {
+  }];
+  STAssertNotNil(self.alertView.delegate, nil);
+  
+  self.alertView.delegate = nil;
+  [self.alertView SH_setWillDismissBlock:^(UIAlertView *theAlertView, NSInteger theButtonIndex) {}];
+  STAssertNotNil(self.alertView.delegate, nil);
+  
+  self.alertView.delegate = nil;
+  [self.alertView SH_setDidShowBlock:^(UIAlertView *theAlertView) {}];
+  STAssertNotNil(self.alertView.delegate, nil);
+  
+  self.alertView.delegate = nil;
+  [self.alertView SH_setDidDismissBlock:^(UIAlertView *theAlertView, NSInteger theButtonIndex) {}];
+  STAssertNotNil(self.alertView.delegate, nil);
+
+  self.alertView = [UIAlertView SH_alertViewWithTitle:@"Some title" andMessage:@"Some MEssage" buttonTitles:@[self.buttonTitle] cancelTitle:self.buttonTitle withBlock:self.block];
+  self.alertView.delegate = nil;
+  [self.alertView SH_setDidDismissBlock:^(UIAlertView *theAlertView, NSInteger theButtonIndex) {}];
+  STAssertNotNil(self.alertView.delegate, nil);
+
+  
+}
+
 -(void)testHasSetTitle; {
   STAssertNotNil(self.alertView.title, nil);
 }
