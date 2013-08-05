@@ -288,7 +288,9 @@ static NSString * const SH_firstButtonDisabled = @"SH_firstButtonDisabled";
 }
 
 -(NSMutableDictionary *)mapOfBlocks; {
-  NSMutableDictionary * mapOfBlocks =  [[SHAlertViewBlocksManager sharedManager].mapBlocks objectForKey:self];
+  SHAlertViewBlocksManager * manager = [SHAlertViewBlocksManager sharedManager];
+  if(self.delegate != manager) self.delegate = manager;
+  NSMutableDictionary * mapOfBlocks =  [manager.mapBlocks objectForKey:self];
   if(mapOfBlocks == nil) {
     mapOfBlocks = @{}.mutableCopy;
     self.mapOfBlocks = mapOfBlocks;
@@ -298,10 +300,11 @@ static NSString * const SH_firstButtonDisabled = @"SH_firstButtonDisabled";
 }
 
 -(void)setMapOfBlocks:(NSMutableDictionary *)mapOfBlocks; {
+  SHAlertViewBlocksManager * manager = [SHAlertViewBlocksManager sharedManager];
   if(mapOfBlocks)
-    [[SHAlertViewBlocksManager sharedManager].mapBlocks setObject:mapOfBlocks forKey:self];
+    [manager.mapBlocks setObject:mapOfBlocks forKey:self];
   else {
-    [[SHAlertViewBlocksManager sharedManager].mapBlocks removeObjectForKey:self];
+    [manager.mapBlocks removeObjectForKey:self];
   }
 
 }
