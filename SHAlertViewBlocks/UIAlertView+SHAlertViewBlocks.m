@@ -123,7 +123,7 @@ static NSString * const SH_firstButtonDisabled = @"SH_firstButtonDisabled";
 @end
 
 @interface UIAlertView (Private)
--(void)addBlock:(SHAlertViewBlock)theBlock forIndex:(NSUInteger)theIndex;
+-(void)addBlock:(SHAlertViewBlock)theBlock forIndex:(NSInteger)theIndex;
 -(void)addBlock:(id)theBlock forKey:(NSString *)theKey;
 -(id)blockForKey:(NSString *)theKey;
 @end
@@ -184,7 +184,7 @@ static NSString * const SH_firstButtonDisabled = @"SH_firstButtonDisabled";
 #pragma mark - Adding
 -(NSInteger)SH_addButtonWithTitle:(NSString *)theTitle
                          withBlock:(SHAlertViewBlock)theBlock; {
-  NSUInteger indexButton = [self addButtonWithTitle:theTitle];
+  NSInteger indexButton = [self addButtonWithTitle:theTitle];
   [self addBlock:[theBlock copy]  forIndex:indexButton];
   return indexButton;
   
@@ -195,7 +195,7 @@ static NSString * const SH_firstButtonDisabled = @"SH_firstButtonDisabled";
 
 -(NSInteger)SH_addButtonCancelWithTitle:(NSString *)theTitle
                                withBlock:(SHAlertViewBlock)theBlock;{
-  NSUInteger indexButton = [self SH_addButtonWithTitle:theTitle withBlock:theBlock];
+  NSInteger indexButton = [self SH_addButtonWithTitle:theTitle withBlock:theBlock];
   [self setCancelButtonIndex:indexButton];
   return indexButton;
   
@@ -273,7 +273,7 @@ static NSString * const SH_firstButtonDisabled = @"SH_firstButtonDisabled";
 
 
 #pragma mark - Privates
--(void)addBlock:(SHAlertViewBlock)theBlock forIndex:(NSUInteger)theIndex; {
+-(void)addBlock:(SHAlertViewBlock)theBlock forIndex:(NSInteger)theIndex; {
   if(theBlock) self.mapOfBlocks[@(theIndex)] = theBlock;
   else [self.mapOfBlocks removeObjectForKey:@(theIndex)];
 }
