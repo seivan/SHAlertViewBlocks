@@ -36,7 +36,7 @@
   __weak typeof(self) weakSelf = self;
   NSString * title = @"Sample";
   NSString * message = @"Sample message";
-  __block NSUInteger selectedIndex = 0;
+  __block NSInteger selectedIndex = 0;
   UIAlertView * alert = [UIAlertView SH_alertViewWithTitle:title withMessage:message];
   SHBlockAssert(alert, @"Instance of a sheet");
   SHBlockAssert([alert.title isEqualToString:title], @"Title should be set");
@@ -58,7 +58,7 @@
   }
   
   
-  NSUInteger cancelIndex      = 3;
+  NSInteger cancelIndex      = 3;
   
   [alert SH_addButtonCancelWithTitle:@"Cancel" withBlock:^(NSInteger theButtonIndex) {
     NSLog(@"Cancel");
