@@ -186,25 +186,23 @@
 
 -(void)testSH_setFirstButtonEnabledBlock; {
   __block BOOL didCallBlock   = NO;
-  __block NSInteger counter   = 0;
-  self.alertView = [UIAlertView SH_alertViewWithTitle:@"Some title" andMessage:@"Some MEssage" buttonTitles:@[self.buttonTitle] cancelTitle:self.buttonTitle withBlock:self.block];
+  self.alertView = [UIAlertView SH_alertViewWithTitle:@"Some title" andMessage:@"Some MEssage" buttonTitles:@[self.buttonTitle] cancelTitle:nil withBlock:^(NSInteger theButtonIndex) {
+    didCallBlock = YES;
+  }];
   
   SHAlertViewFirstButtonEnabledBlock block = ^BOOL(UIAlertView * theAlertView) {
     STAssertEquals(self.alertView, theAlertView, nil);
-    didCallBlock = YES;
-    return YES;
+    return [[[theAlertView textFieldAtIndex:0] text] isEqualToString:@"seivan"];
   };
   [self.alertView SH_setFirstButtonEnabledBlock:block];
-  STAssertTrue(self.alertView.SH_blockForFirstButtonEnabled(self.alertView), nil);
-  STAssertTrue(didCallBlock, nil);
+  self.alertView.alertViewStyle = UIAlertViewStylePlainTextInput;
+  [self.alertView show];
   
+  [[@"s,e,i,v,a,n" componentsSeparatedByString:@"m"] SH_each:^(NSString * obj) {
+    [tester enterTextIntoCurrentFirstResponder:@"seivan"];
+  }];
+  
+  [tester tapViewWithAccessibilityLabel:self.buttonTitle];
+  STAssertTrue(didCallBlock, nil);
 }
-//
-//-(void)testSH_setFirstButtonEnabledBlockWithoutButton; {
-//  SHAlertViewFirstButtonEnabledBlock block = ^BOOL(UIAlertView * theAlertView) {
-//    return YES;
-//  };
-//  STAssertThrows([self.alertView SH_setFirstButtonEnabledBlock:block], nil);
-//  STAssertNil(self.alertView.SH_blockForFirstButtonEnabled, nil);
-//}
 @end
