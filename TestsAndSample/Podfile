@@ -1,0 +1,18 @@
+platform :ios, '7.0' 
+
+link_with [:Sample, :Tests]
+pod 'SHAlertViewBlocks', :path => '../'
+
+target :Sample, :exclusive => true do
+  pod 'SHSegueBlocks'
+  pod 'SHBarButtonItemBlocks'
+end
+
+target :Tests, :exclusive => true do
+  pod 'SHTestCaseAdditions'
+  pod "KIF/XCTest", :git => "https://github.com/tonyd256/KIF", :branch => "xctest"
+end
+
+
+
+
