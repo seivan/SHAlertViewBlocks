@@ -1,0 +1,36 @@
+PODS:
+  - KIF/Core (2.0.0)
+  - KIF/XCTest (2.0.0):
+    - KIF/Core
+  - SHAlertViewBlocks (1.1.0)
+  - SHBarButtonItemBlocks (1.1.0)
+  - SHObjectUserInfo (1.1.0)
+  - SHSegueBlocks (1.2.0):
+    - SHObjectUserInfo (~> 1.1.0)
+  - SHTestCaseAdditions (1.4.1):
+    - SHTestCaseAdditions/XCTest
+  - SHTestCaseAdditions/XCTest (1.4.1)
+
+DEPENDENCIES:
+  - KIF/XCTest (from `https://github.com/tonyd256/KIF`, branch `xctest`)
+  - SHAlertViewBlocks (from `../`)
+  - SHBarButtonItemBlocks
+  - SHSegueBlocks
+  - SHTestCaseAdditions
+
+EXTERNAL SOURCES:
+  KIF:
+    :branch: xctest
+    :git: https://github.com/tonyd256/KIF
+  SHAlertViewBlocks:
+    :path: ../
+
+SPEC CHECKSUMS:
+  KIF: 5de8e5eedd49c83778fe326c918f9330123a7412
+  SHAlertViewBlocks: ba88a9c577c521ed79443771f7422ed555778a16
+  SHBarButtonItemBlocks: 9a46094653b708ee34d0667f78e0f3d46a550ab5
+  SHObjectUserInfo: 3dfe4af11a45c985088f613813705b8ebd3cc718
+  SHSegueBlocks: 9acc4d9d5f588933693b594cb07dfce4e2c42d2a
+  SHTestCaseAdditions: ff32e10731f37effd08c254e538c3e7998f74921
+
+COCOAPODS: 0.28.0
