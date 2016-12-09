@@ -1,3 +1,6 @@
+Deprecated, please use [RxCocoa](https://github.com/ReactiveX/RxSwift) 
+
+
 SHAlertViewBlocks
 ==========
 [![CI Status](https://img.shields.io/travis/seivan/SHAlertViewBlocks.svg?style=flat)](https://travis-ci.org/seivan/SHAlertViewBlocks)
